@@ -1,0 +1,71 @@
+{% extends 'shop/basic.html'%}
+{% block title%} Contact Us {% endblock%}
+
+{% block body%}  
+<div class="container ">
+    <div class="row justify-content-evenly py-4">
+        <div class="py-5 text-center">
+            <h1 class="display-3"class="shadow p-3 mb-5 bg-body rounded">Contact Us</h1>
+            <p class="lead">You can contact us by filling given details</p>
+          </div>
+          
+        <div class="col-lg-8">
+            <form class="row lg-3" action="/shop/contact/" method="POST" > {% csrf_token %}
+                <div class="col-md-6 pb-2">
+                    <label for="Firstname" class="form-label"><b>First name</b></label>
+                    <input type="text" class="form-control"  name = 'Fname'id="Fname"placeholder="Enter your first name">
+                  </div>
+                  <div class="col-md-6 pb-2">
+                  <label for="lastname" class="form-label"><b>Last name</b></label>
+                  <input type="text" class="form-control" id="Lname" name = 'Lname' placeholder="Enter your Last name">
+                </div>
+                <div class="col-md-6 pb-2">
+                  <label for="Email" class="form-label"><b>Email</b></label>
+                  <input type="email" class="form-control" id="email" name = 'email' placeholder="name@example.com">
+                </div>
+                <div class="col-md-6 pb-2">
+                  <label for="phonenumber" class="form-label"><b>Phone Number</b></label>
+                  <input type="tel" class="form-control"  name = 'phone'id="phone">
+                </div>
+                <div class="col-12 pb-2">
+                  <label for="Address" class="form-label"><b>Address</b></label>
+                  <input type="text" class="form-control" id="address" name = 'address' placeholder="Enter your Primary Address">
+                </div>
+               
+                <div class="col-md-6 pb-2">
+                  <label for="City" class="form-label"><b>City</b></label>
+                  <input type="text" class="form-control" id="city" name = 'city' placeholder="Enter your city name">
+                </div>
+                <div class="col-md-4 pb-2">
+                  <label for="State" class="form-label"><b>State</b></label>
+                  <select id="state" class="form-select" name ='state'>
+                    <option selected><b>Choose...</b></option>
+                    <option>...</option>
+                  </select>
+                </div>
+                <div class="col-md-2 pb-2">
+                  <label for="inputZip" class="form-label"><b>Zip</b></label>
+                  <input type="text" class="form-control" id="inputZip" placeholder="Zipcode">
+                </div>
+                <div class="col-12 mb-3 pt-3 pb-2">
+                    <label for="Query" class="form-label"><b>Query</b></label>
+                    <textarea class="form-control" id="query" name = 'query' rows="3" ></textarea>
+                  </div>
+                <div class="col-12 pb-2 pt-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                      <b>Check</b>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12 pb-4 pt-3">
+                  <button type="submit" class="btn btn-outline-success"><b>Submit</b></button>
+                </div>
+              </form>
+        </div>
+    </div>
+</div>
+]
+
+{% endblock%}

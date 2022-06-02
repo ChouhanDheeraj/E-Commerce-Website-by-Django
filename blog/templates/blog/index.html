@@ -1,0 +1,57 @@
+{% extends 'blog/basic.html'%}
+{% block title%} Blog {% endblock%}
+{% block CSS %} 
+{% endblock%}
+<style>
+  body{
+    background-color: rgb(80, 110, 103);
+  }
+</style>
+{% block body%}
+  </head>
+  <body>
+     <div class="container">
+      
+
+    
+      <div class="row mb-2 my-4">
+        {% for item in mypost %}
+        <div class="col-md-6">
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static" style="background-color: rgb(160, 233, 223);">
+              <strong class="d-inline-block mb-2 text-primary">{{item.Title}}</strong>
+              <h3 class="mb-0">{{item.Title}}</h3>
+              <div class="mb-1 text-muted">Nov 12</div>
+              <h5 class="card-text mb-auto">{{item.head0}}</h5>
+              <a href="blogpost/{{item.post_id}}" class="stretched-link">Continue reading</a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+              <img src="/media/{{item.thumbnail}}" class="bd-placeholder-img" width="200" height="250" aria-label="Placeholder: Thumbnail">
+                    <title>Placeholder</title></img>
+            </div>
+          </div>
+        </div>
+
+
+        {% if forloop.counter|divisibleby:2%}
+
+      </div>
+      <div class="row py-2 px-2">
+      {% endif %}
+    
+      {% endfor %}
+     </div>
+    </div>
+    <div class="fb-like" data-href="http://127.0.0.1:8000/blog/blogpost/2" data-width="" data-layout="standard" data-action="like" data-size="large" data-share="true"></div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+   
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    -->
+  </body>
+  {% endblock%}

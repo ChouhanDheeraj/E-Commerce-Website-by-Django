@@ -1,0 +1,116 @@
+{% extends 'shop/basic.html'%}
+{% block title%} Tracker {% endblock%}
+{% block CSS %}
+
+{% endblock%}
+{% block body%}
+<div class="container">
+  <div class="row   justify-content-evenly py-4">
+    <h3 class="display-6 text-center"><b>My Awesome Cart Tracker-Enter your Email-Id to track your order</b></h3>
+    <div class="col-8 py-4">
+
+      <form class="row g-3" method='post' action='#' id='trackerform'>{% csrf_token %}
+        <input type='hidden' name='itemsJson' id='itemsJson'>
+        <div class="col-md-12 ">
+          <label for="Fullname" class="form-label"><b>Order Id</b></label>
+          <input type="text" class="form-control" name='orderId' id="orderId" placeholder="Enter your Order Id">
+        </div>
+
+        <div class="col-md-12">
+          <label for="inputEmail4" class="form-label"><b>Email</b></label>
+          <input type="email" class="form-control" name='email' id="email" placeholder="Enter your Email Id">
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-outline-dark ">Track Order</button>
+        </div>
+      </form>
+
+    </div>
+    <!--Step1 END-->
+    <h3 class="display-6 text-center"><b>Your Order Status</b></h3>
+    <div class="col-8 py-4">
+      <div>
+        <ul class="list-group text-center" id='items'>
+          Enter your Email-Id and Order-Id above for tracking your order.
+        </ul>
+      </div>
+    </div>
+    <h3 class="display-6 text-center"><b>Your Order Details </b></h3>
+    <div class="col-8 py-4">
+    
+        <ul class="list-group text-center" id='citems'>
+         
+        </ul>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+{% endblock%}
+{% block js %}
+{% load static %}
+<script>
+  $('#trackerform').submit(function (event) {
+    $("#items").empty();
+    var Formdata = {
+      'orderId': $("input[name = 'orderId']").val(),
+      'email': $("input[name = 'email']").val(),
+      'csrfmiddlewaretoken': $("input[name = 'csrfmiddlewaretoken']").val()
+    };
+    $.ajax({
+      type: 'POST',
+      url: '/shop/tracker/',
+      data: Formdata,
+      encode: true
+    })
+      .done(function (data) {
+        $('#citems').empty();
+        console.log(data)
+        data = JSON.parse(data);
+        
+        if (data['status'] == 'successed') {
+          updates = data['updates'];
+          for (i = 0; i < updates.length; i++) {
+            let text = updates[i]['text'];
+            let time = updates[i]['time'];
+
+            mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+            ${text}
+            <span class="badge bg-info rounded-pill">${time}</span>
+          </li>`
+            $('#items').append(mystr);
+          }
+          // fill the details
+        cart = JSON.parse(data['itemsjson']);
+        console.log(cart);
+        for (item in cart) {
+          let name = cart[item][1];
+          let Qty = cart[item][0];
+         
+          mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+            ${name}
+            <span class="badge bg-primary rounded-pill">${Qty}</span>
+          </li>`
+          $('#citems').append(mystr);
+        }
+      }
+    else {
+          mystr = `<li class="list-group-item d-flex justify-content-between align-items-center"><b>
+           Sorry, We are not able to fetch this email Id aur order Id. Make sure to type correct email id of order id !!</b>
+          </li>`
+          $('#items').append(mystr);
+          $('#citems').append(mystr);
+        }
+        
+      
+      });
+    event.preventDefault();
+  });
+</script>
+
+
+{% endblock%}
